@@ -40,4 +40,11 @@ This file contains all config files for the PowerDNS and connection config file 
 
 This file contains the primary PowerDNS MySQL tables.
 
+## Build and run 
 
+You can simply run this command for build and run:
+
+```
+docker-compose up -d --build 
+
+```

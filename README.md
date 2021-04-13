@@ -28,19 +28,19 @@ These are used for MySQL login and create the database.
 
 ## Config Files
 
-# dnsdist
+### dnsdist
 
 This file contains all config files for the Dnsdist such as pool, server, ACL, action. for more information click [here](https://dnsdist.org/reference/config.html)
 
-# powerdns
+### powerdns
 
 This file contains all config files for the PowerDNS and connection config file  to MySQL, for more information click [here](https://doc.powerdns.com/)
 
-# mysql-data
+### mysql-data
 
 This file contains the primary PowerDNS MySQL tables.
 
-## Build and run 
+### Build and run 
 
 You can simply run this command for build and run:
 

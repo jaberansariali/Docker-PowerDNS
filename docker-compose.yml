@@ -1,0 +1,63 @@
+version: '3'
+services:
+  dnsdist:
+    build:
+      context: '.'
+      dockerfile: 'Dockerfile-Dnsdist'
+    image: 'dnsdist:latest'
+    restart: 'unless-stopped'
+    container_name: 'dnsdist'
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./dnsdist/:/etc/dnsdist/:rw
+    expose:
+      - '53'
+      - '53/udp'
+    ports:
+      - '53:53'
+      - '53:53/udp'
+    networks:
+      dnsnetwork:
+        ipv4_address: 172.16.60.10
+
+
+  powerdns:
+    build:
+      context: '.'
+      dockerfile: 'Dockerfile-Powerdns'
+    image: 'powerdns:latest'
+    container_name: 'powerdns'
+    restart: 'unless-stopped'
+    volumes:
+      - ./powerdns/:/etc/powerdns:rw
+    depends_on:
+      - database      
+    expose:
+      - '53'
+      - '53/udp'
+    networks:
+      dnsnetwork:
+        ipv4_address: 172.16.60.20
+
+  database:
+    image: 'mysql:latest'
+    restart: 'unless-stopped'
+    container_name: 'dns-db'
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=LJsa65d9DFxcvbrfTYzxcb
+      - MYSQL_USER=powerdns
+      - MYSQL_PASSWORD=powerdns
+      - MYSQL_DATABASE=powerdns
+    networks:
+      dnsnetwork:
+        ipv4_address: 172.16.60.30
+
+networks:
+  dnsnetwork:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.16.60.0/24

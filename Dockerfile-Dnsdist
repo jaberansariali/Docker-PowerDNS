@@ -1,0 +1,15 @@
+FROM ubuntu:latest
+MAINTAINER Ali jaberansari
+ENV  DEBIAN_FRONTEND=noninteractive
+RUN apt-get update \
+    && apt install -y dnsdist \
+       dnsutils \
+       net-tools  \
+       iputils-ping \
+       telnet 
+#Set your correct timezone 
+RUN ln -fs /usr/share/zoneinfo/Asia/Tehran /etc/localtime
+EXPOSE 53/tcp
+EXPOSE 53/udp
+
+CMD ["/usr/bin/dnsdist"]

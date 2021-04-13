@@ -1,0 +1,13 @@
+FROM ubuntu:latest
+MAINTAINER Ali jaberansari
+RUN apt-get update \
+    && apt install -y pdns-server \
+       pdns-backend-mysql \
+       dnsutils \
+       net-tools  \
+       mysql-client 
+
+EXPOSE 53/tcp
+EXPOSE 53/udp
+
+CMD [ "/usr/sbin/pdns_server" ]
